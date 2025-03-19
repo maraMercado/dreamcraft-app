@@ -1,39 +1,95 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
+import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { useFonts } from "expo-font";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { router, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
+import { ImageRefProvider } from "@/context/ImageRefContext";
+import { ImageProvider } from "@/context/ImageContext";
+
+import { colors } from "@/styles/colors";
+import { fonts } from "@/styles/fonts";
+import { Pressable } from "react-native";
+import { ArrowIcon } from "@/components/icons/LayoutIcons";
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    const [loaded, error] = useFonts(fonts);
+  
+    useEffect(() => {
+      if (loaded || error) {
+        SplashScreen.hideAsync();
+      }
+    }, [!loaded && !error]);
+    
+    if (!loaded && !error) {
+      return null;
     }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    <ImageRefProvider>
+    <ImageProvider>
+
+      <StatusBar 
+        style="light"
+        backgroundColor={colors.blue}
+      />
+
+      <Stack
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: colors.blue,
+          },
+          
+          headerTitleStyle: {
+            fontFamily: "Fredoka-Medium",
+            color: colors.primary,
+          },
+
+          headerLeft: () => (
+            <Pressable 
+              onPress={() => router.push("/create")}
+              style={{ right: 10 }}
+            >
+              
+              {({ pressed }) => (
+          
+              <ArrowIcon 
+                color={ 
+                 pressed 
+                 ? colors.onPressOpacity 
+                 : colors.primary
+                }
+              />
+          
+              )}
+             </Pressable>
+          ),
+        }}
+      >
+
+        <Stack.Screen 
+          name="(tabs)" 
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen 
+          name="story" 
+          options={{ title: "story" }} 
+        />
+
+        <Stack.Screen 
+          name="tutorial" 
+          options={{ title: "tutorial" }} 
+        />
+
         <Stack.Screen name="+not-found" />
+        
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+
+    </ImageProvider>
+    </ImageRefProvider>
+  )
 }
