@@ -3,7 +3,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { type ImageSource } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useImageRef } from "@/context/ImageRefContext";
 import { useImageContext } from "@/context/ImageContext";
 
@@ -14,6 +14,7 @@ import CustomizeModal from "@/components/customize/CustomizeModal";
 import CustomizeList from "@/components/customize/CustomizeList";
 import FullModal from "@/components/full-modal/FullModal";
 import FullModalList from "@/components/full-modal/FullModalList";
+import FilterButtons from "@/components/buttons/FilterButtons";
 import CharSticker from "@/components/CharSticker";
 
 import { backgroundsData } from "@/data/backgroundsData";
@@ -31,7 +32,24 @@ export default function CreateScreen() {
     const [fullModalTitle, setFullModalTitle] = useState<string | undefined>(undefined);
     const [isFullModalVisible, setIsFullModalVisible] = useState<boolean>(false);
 
+    const [data, setData] = useState(backgroundsData);
+    const [areFiltersVisible, setAreFiltersVisible] = useState<boolean>(false);
+
     const imageRef = useImageRef();
+
+    useEffect(() => {
+      if (fullModalTitle === "Backgrounds") {
+        setData(backgroundsData);
+      }
+
+      if (fullModalTitle === "Characters") {
+        setData(charsData)
+      }
+
+      if (fullModalTitle === "Elements") {
+        setData(elemsData);
+      }
+    }, [fullModalTitle])
 
     const onCustomize = () => {
       setIsModalVisible(true);
@@ -39,6 +57,10 @@ export default function CreateScreen() {
 
     const onModalClose = () => {
       setIsModalVisible(false);
+    };
+
+    const onFullModalClose = () => {
+      setIsFullModalVisible(false);
     };
 
     const onRestart = () => {
@@ -51,20 +73,6 @@ export default function CreateScreen() {
         setFullModalTitle(text);
         setIsFullModalVisible(true);
     };
-
-    const handleItemData = () => {
-      if (fullModalTitle === "Backgrounds") {
-        return backgroundsData;
-      }
-
-      if (fullModalTitle === "Characters") {
-        return charsData;
-      }
-
-      if (fullModalTitle === "Elements") {
-        return elemsData;
-      }
-    }
 
     const handleItemSelect = (image: ImageSource) => {
       if (fullModalTitle === "Backgrounds") {
@@ -87,6 +95,20 @@ export default function CreateScreen() {
 
       setSelectedChars(removedChars);
     };
+
+    const handleFilter = (categ: string, data: any) => {
+      const filteredList = data.filter((obj: any) => 
+        obj.category.some((cat: string) => cat === categ))
+        setData(filteredList);
+    }
+
+    const onFiltersHandler = () => {
+      setAreFiltersVisible((prev: boolean) => !prev);
+    }
+
+    const removeFiltersHandler= (data: any) => {
+      setData(data);
+    }
 
     return (
         <GestureHandlerRootView style={styles.mainContainer}>
@@ -119,14 +141,20 @@ export default function CreateScreen() {
 
             <FullModal 
               isVisible={isFullModalVisible} 
-              onClose={() => setIsFullModalVisible(false)}
+              onClose={onFullModalClose}
               title={fullModalTitle}
-            >
+              onFiltersVisible={onFiltersHandler}
+            > 
+                {areFiltersVisible && 
+                <FilterButtons title={fullModalTitle} onHandleFilter={handleFilter} onRemoveFilters={removeFiltersHandler} />
+                }
+
                 <FullModalList 
-                  data={handleItemData} 
+                  data={data} 
                   onSelect={handleItemSelect} 
-                  onCloseModal={() => setIsFullModalVisible(false)} 
+                  onCloseModal={onFullModalClose} 
                 />
+
             </FullModal>
 
         </GestureHandlerRootView>

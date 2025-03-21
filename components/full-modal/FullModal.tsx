@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
-import { Modal, Text, View, StyleSheet, Pressable } from "react-native";
+import { Modal, Text, View, StyleSheet, } from "react-native";
 
+import { FilterIcon } from "../icons/AppIcons";
 import { CloseIcon } from "../icons/AppIcons";
 
 import { colors } from "@/styles/colors";
@@ -10,9 +11,10 @@ type Props = PropsWithChildren<{
     isVisible: boolean;
     onClose: () => void;
     title: string | undefined;
+    onFiltersVisible: () => void;
 }>
 
-export default function FullModal({isVisible, children, onClose, title }: Props) {
+export default function FullModal({isVisible, children, onClose, title, onFiltersVisible }: Props) {
     return (
         <View>
             <Modal
@@ -21,7 +23,13 @@ export default function FullModal({isVisible, children, onClose, title }: Props)
             >
                 <View style={styles.modalContainer}>
                     <View style={styles.titleContainer}>
-                        <Text style={styles.title}>{title}</Text>
+                        <View style={{ flexDirection: "row", gap: 15}}>
+                            <Text style={styles.title}>{title}</Text>
+                            <FilterIcon 
+                                style={{ alignSelf: "center" }} 
+                                onPress={onFiltersVisible}
+                            />
+                        </View>
                         <CloseIcon onPress={onClose} style={styles.title} />
                     </View>
                     {children}

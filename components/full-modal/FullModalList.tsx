@@ -10,11 +10,9 @@ type Props = {
 };
 
 export default function FullModalList({ onSelect, onCloseModal, data }: Props) {
- const { width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
     const itemWidth = Platform.OS !== "web" ? 190 : 210;
     const numColumns = Math.floor(width / itemWidth);
-
-    let [dataList] = useState(data);
 
     return (
         <View style={styles.fullModalContainer}>
@@ -22,11 +20,12 @@ export default function FullModalList({ onSelect, onCloseModal, data }: Props) {
                 horizontal={false}
                 numColumns = {numColumns}
                 key={numColumns}
-                contentContainerStyle = {styles.listContainer}
-                columnWrapperStyle = {numColumns > 1 ? styles.columnWrapper : null}
-                data = {dataList}
+                contentContainerStyle={styles.listContainer}
+                columnWrapperStyle={numColumns > 1 ? styles.columnWrapper : null}
+                data={data}
+                keyExtractor={(item) => item.id}
                 showsVerticalScrollIndicator={false} 
-                renderItem = {({ item }) => (
+                renderItem={({ item }) => (
                     <Pressable
                         style={({pressed}) => [{ opacity: pressed ? 0.4 : 1 }]}
                         onPress={() => {

@@ -7,7 +7,7 @@ type ToolsIconsProps = {
     name: string;
 }
 
-type CloseIconProps = {
+type IconProps = {
     onPress: () => void;
     style: any;
 }
@@ -32,13 +32,24 @@ export function ToolsIcons({ name }: ToolsIconsProps) {
     )
 }
 
-export function CloseIcon({ onPress, style }: CloseIconProps) {
+export function CloseIcon({ onPress, style }: IconProps) {
     return (
         <Pressable 
             style={({pressed}) => [{ opacity: pressed ? 0.4 : 1, right: 5 }]}
             onPress={onPress}
         >
             <Text style={[style, { fontSize: 30, }]}>X</Text>
+        </Pressable>
+    )
+}
+
+export function FilterIcon({ onPress, style }: IconProps) {
+    return (
+        <Pressable
+            style={({pressed}) => [{ opacity: pressed ? 0.4 : 1 }, style]}
+            onPress={onPress}
+        >
+            <FontAwesome6 name="filter" size={25} color={colors.primary} />
         </Pressable>
     )
 }
