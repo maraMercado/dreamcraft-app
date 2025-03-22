@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, ScrollView, Platform } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import { LinearGradient } from "expo-linear-gradient";
 
 import * as Animatable from 'react-native-animatable';
 import domtoimage from "dom-to-image";
+
 import LottieView from 'lottie-react-native';
 
 import { useImageRef } from "@/context/ImageRefContext";
@@ -67,12 +68,15 @@ export default function StoryScreen() {
                         />
                         
                         <View style={styles.loadingContainer}>
-                            <LottieView
+                            {Platform.OS === "web" 
+                                ? "TODO: make lottie work on web"
+                                : <LottieView
                                 source={require("@/assets/lottie-animations/magic-book.json")}
                                 autoPlay
                                 loop
                                 style={{ height: 150, width: 150 }}
-                            />
+                                />
+                            }
 
                             <Animatable.Text
                                 animation="fadeIn"

@@ -85,7 +85,10 @@ export default function RootLayout() {
           options={{ title: "tutorial" }} 
         />
 
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen 
+          name="+not-found"
+          options={{ headerShown: false }} 
+        />
         
       </Stack>
 
