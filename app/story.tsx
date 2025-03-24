@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, StyleSheet, ScrollView, Platform } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Platform, Image } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -22,39 +22,56 @@ export default function StoryScreen() {
         let base64Image;
 
         if (Platform.OS !== "web") {
-            base64Image = await captureRef(imageRef, {
-                result: "base64",
-        });
+
+            try {
+                base64Image = await captureRef(imageRef, {
+                    result: "base64",
+                });
+
+            } catch(errorImageMobile) {
+                console.error("Failed at processing image on mobile:", errorImageMobile);
+                throw new Error("Unable to process the image on mobile...");
+            };
+
         } else {
-            const imagen = await domtoimage.toJpeg(imageRef.current, {
-                quality: 0.95,
-                width: 320,
-                height: 440,
-            });
-            base64Image = imagen.split("data:image/jpeg;base64,");
-            base64Image.shift();
-            base64Image = base64Image.toString();
-        }
+
+            try {
+                const imagen = await domtoimage.toJpeg(imageRef.current, {
+                    quality: 0.95,
+                    width: 320,
+                    height: 440,
+                });
+                base64Image = imagen.split("data:image/jpeg;base64,");
+                base64Image.shift();
+                base64Image = base64Image.toString();
+
+            } catch(errorImageWeb) {
+                console.error("Failed at processing image on web:", errorImageWeb);
+                throw new Error("Unable to process the image on web...");
+            };
+        };
         
-        const response = await fetch(generateAPIUrl("/api/ai"), {
+        try {
+            const response = await fetch(generateAPIUrl("/api/ai"), {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ image: base64Image}),
-        });
+            });
 
-        if (!response.ok) {
-             throw new Error("Error en la solicitud");
-        }
+            const data = await response.json();
+            setStory(data.story);
 
-        const data = await response.json();
-        setStory(data.story);
-    }
+        } catch (errorAPI) {
+            console.error("Error en fetch API", errorAPI);
+            throw new Error("Unable to generate the story...");
+        };  
+    };
 
     useEffect(() => {
         createStory();
-    }, [])
+    }, []);
     
     return (
             // Nos ahorramos no renderizar scrollview si no hay texto largo
@@ -69,13 +86,21 @@ export default function StoryScreen() {
                         
                         <View style={styles.loadingContainer}>
                             {Platform.OS === "web" 
-                                ? "TODO: make lottie work on web"
-                                : <LottieView
-                                source={require("@/assets/lottie-animations/magic-book.json")}
-                                autoPlay
-                                loop
-                                style={{ height: 150, width: 150 }}
-                                />
+                                ? 
+                                    <Animatable.Image
+                                        source={require("@/assets/lottie-animations/web-magic-book.png")} 
+                                        animation="fadeIn"
+                                        duration={2900}
+                                        iterationCount={"infinite"}
+                                        style={{ height: 150, width: 150 }}
+                                    />
+                                : 
+                                    <LottieView
+                                        source={require("@/assets/lottie-animations/magic-book.json")}
+                                        autoPlay
+                                        loop
+                                        style={{ height: 150, width: 150 }}
+                                    />
                             }
 
                             <Animatable.Text
@@ -83,7 +108,9 @@ export default function StoryScreen() {
                                 duration={2900}
                                 iterationCount={"infinite"}
                                 style={styles.loading}
-                            >{story}</Animatable.Text>
+                            >
+                                {story}
+                            </Animatable.Text>
                         </View>
                     </>
                     

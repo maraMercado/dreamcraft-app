@@ -61,6 +61,7 @@ export default function CreateScreen() {
 
     const onFullModalClose = () => {
       setIsFullModalVisible(false);
+      setAreFiltersVisible(false);
     };
 
     const onRestart = () => {
