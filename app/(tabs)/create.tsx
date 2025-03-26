@@ -142,6 +142,7 @@ export default function CreateScreen() {
 
             <FullModal 
               isVisible={isFullModalVisible} 
+              hasFilters={true}
               onClose={onFullModalClose}
               title={fullModalTitle}
               onFiltersVisible={onFiltersHandler}

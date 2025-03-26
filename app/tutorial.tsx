@@ -4,7 +4,7 @@ export default function TutorialScreen() {
 
     
   return (
-    <View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center" }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text>Tutorial</Text>
     </View>
   );

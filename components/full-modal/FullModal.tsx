@@ -11,10 +11,11 @@ type Props = PropsWithChildren<{
     isVisible: boolean;
     onClose: () => void;
     title: string | undefined;
-    onFiltersVisible: () => void;
+    hasFilters: boolean;
+    onFiltersVisible?: any;
 }>
 
-export default function FullModal({isVisible, children, onClose, title, onFiltersVisible }: Props) {
+export default function FullModal({isVisible, children, onClose, title, hasFilters, onFiltersVisible }: Props) {
     return (
         <View>
             <Modal
@@ -25,10 +26,11 @@ export default function FullModal({isVisible, children, onClose, title, onFilter
                     <View style={styles.titleContainer}>
                         <View style={{ flexDirection: "row", gap: 15}}>
                             <Text style={styles.title}>{title}</Text>
+                            { hasFilters && 
                             <FilterIcon 
                                 style={{ alignSelf: "center" }} 
                                 onPress={onFiltersVisible}
-                            />
+                            />}
                         </View>
                         <CloseIcon onPress={onClose} style={styles.title} />
                     </View>
