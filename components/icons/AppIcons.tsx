@@ -53,3 +53,33 @@ export function FilterIcon({ onPress, style }: IconProps) {
         </Pressable>
     )
 }
+
+export function EmailIcon() {
+    return (
+        <FontAwesome6 
+            name="at"
+            size={18}
+            color={colors.yellow}
+        />
+    )
+}
+
+export function LockIcon() {
+    return (
+        <FontAwesome6 
+            name="lock"
+            size={18}
+            color={colors.yellow}
+        />
+    )
+}
+
+export function SaveIcon() {
+    return (
+        <FontAwesome6
+            name="save"
+            size={30}
+            color={colors.primary}
+        />
+    )
+}

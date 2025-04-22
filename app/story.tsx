@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, ScrollView, Platform, Pressable, TextInput } from "react-native";
+import { Text, View, StyleSheet, ScrollView, Platform, Pressable, TextInput, Alert } from "react-native";
 import { captureRef } from "react-native-view-shot";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -11,11 +11,15 @@ import LottieView from 'lottie-react-native';
 import FullModal from "@/components/full-modal/FullModal";
 import Options from "@/components/buttons/OptionsButtons";
 import IconButton from "@/components/buttons/IconButton";
+import { SaveIcon } from "@/components/icons/AppIcons";
 
 import { age, storyLength, feelings, narrationType } from "@/data/optionsData";
 import { useImageRef } from "@/context/ImageRefContext";
 import { colors } from "@/styles/colors";
 import { generateAPIUrl } from "@/functions/api-url";
+
+import { db, auth } from "@/firebaseConfig";
+import { collection, addDoc } from "firebase/firestore"; 
 
 const loadingPhrase = "Sprinkling some stardust... Your story is coming to life!";
 
@@ -88,6 +92,27 @@ export default function StoryScreen() {
             throw new Error("Unable to generate the story...");
         };  
     };
+
+    async function saveStory() {
+        const user = auth.currentUser; 
+        if (!user) {
+            Alert.alert("There's no user autenticated");
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, "userTexts"), {
+              userId: user.uid, 
+              text: story,
+              createdAt: new Date(),
+            });
+            Alert.alert("Saved successfully");
+            console.log("Saved!!!");
+        } catch (error) {
+            Alert.alert("There has been an error...");
+            console.error(error);
+        }
+    };
     
     return (
             <>
@@ -144,6 +169,7 @@ export default function StoryScreen() {
                                     <Pressable 
                                         style={({pressed}) => [{ opacity: pressed ? 0.4 : 1 }, styles.buttonYesNo]}
                                         onPress={() => createStory()}
+
                                     >
                                         <Text style={[styles.loading, {color: "darkred", fontSize: 30, }]}>
                                             No
@@ -210,6 +236,12 @@ export default function StoryScreen() {
                                 >
                                     <Text style={styles.story}>{story}</Text>
                                 </ScrollView>
+                                <Pressable 
+                                        onPress={() => saveStory()}
+                                        style={styles.buttonSave}
+                                    >
+                                        <SaveIcon />
+                                </Pressable>
                             </View>
                         </>
                 }
@@ -269,6 +301,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         color: colors.yellow,
         fontFamily: "Fredoka-Medium",
+        width: "100%",
+        maxWidth: 200,
     },
 
     storyContainer: {
@@ -281,5 +315,19 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontFamily: "Fredoka-Medium",
         padding: 35,
+    },
+
+    buttonSave: {
+        position: "absolute",
+        right: "10%",
+        top: "75%",
+        backgroundColor: colors.darkBlue,
+        width: 70,
+        height: 70,
+        borderRadius: 100,
+        borderColor: colors.gradientDark,
+        borderWidth: 2,
+        alignItems: "center",
+        justifyContent: "center",
     },
 })

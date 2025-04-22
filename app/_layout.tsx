@@ -76,6 +76,11 @@ export default function RootLayout() {
         />
 
         <Stack.Screen 
+          name="index"
+          options={{ headerShown: false }} 
+        />
+
+        <Stack.Screen 
           name="story" 
           options={{ title: "story" }} 
         />
@@ -83,6 +88,11 @@ export default function RootLayout() {
         <Stack.Screen 
           name="tutorial" 
           options={{ title: "tutorial" }} 
+        />
+
+        <Stack.Screen 
+          name="storyDetails" 
+          options={{ title: "Your story" }} 
         />
 
         <Stack.Screen 

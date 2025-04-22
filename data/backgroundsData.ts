@@ -131,4 +131,40 @@ export const backgroundsData = [
         category: ["Space"], 
         id: "021",
     },
+    {
+        image: require("@/assets/images/bg/basketball.png"),
+        text: "Basketball court",
+        category: ["City"],
+        id: "022",
+    },
+    {
+        image: require("@/assets/images/bg/bedroom.png"),
+        text: "Bedroom",
+        category: ["House"],
+        id: "023",
+    },
+    {
+        image: require("@/assets/images/bg/city-night.png"),
+        text: "City at night",
+        category: ["City"],
+        id: "024",
+    },
+    {
+        image: require("@/assets/images/bg/classroom.png"),
+        text: "Classroom",
+        category: ["City"],
+        id: "025",
+    },
+    {
+        image: require("@/assets/images/bg/living-room.png"),
+        text: "Living room",
+        category: ["House"],
+        id: "026",
+    },
+    {
+        image: require("@/assets/images/bg/soccer.png"),
+        text: "Soccer stadium",
+        category: ["City"],
+        id: "027",
+    },
 ]

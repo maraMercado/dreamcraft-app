@@ -1,4 +1,15 @@
-export const elemsData = [
+import { Image } from "react-native";
+
+type elemsCategoriesProps = Array<"Party" | "Vehicles" | "Magic" | "Outer space" | "Battle" | "Toys" | "Nature" | "Sports" | "Food" | "Hobbies">;
+
+type elemsDataProps = {
+    image: Image;
+    text: string;
+    category: elemsCategoriesProps;
+    id: string;
+}[];
+
+export const elemsData: elemsDataProps = [
     {
         image: require("@/assets/images/elems/birthday-cake.png"),
         text: "B-day cake",
@@ -70,5 +81,83 @@ export const elemsData = [
         text: "Volcano",
         category: ["Nature"],
         id: "211",
+    },
+    {
+        image: require("@/assets/images/elems/basketball.png"),
+        text: "Basketball",
+        category: ["Sports"],
+        id: "212",
+    },
+    {
+        image: require("@/assets/images/elems/boat.png"),
+        text: "Boat",
+        category: ["Vehicles"],
+        id: "213",
+    },
+    {
+        image: require("@/assets/images/elems/book.png"),
+        text: "Book",
+        category: ["Hobbies"],
+        id: "214",
+    },
+    {
+        image: require("@/assets/images/elems/car-green.png"),
+        text: "Green car",
+        category: ["Vehicles"],
+        id: "215",
+    },
+    {
+        image: require("@/assets/images/elems/cassette.png"),
+        text: "Cassette",
+        category: ["Hobbies"],
+        id: "216",
+    },
+    {
+        image: require("@/assets/images/elems/drink-milkshake-chocolate.png"),
+        text: "Chocolate milkshake",
+        category: ["Food"],
+        id: "217",
+    },
+    {
+        image: require("@/assets/images/elems/fire-truck.png"),
+        text: "Fire truck",
+        category: ["Vehicles"],
+        id: "218",
+    },
+    {
+        image: require("@/assets/images/elems/football.png"),
+        text: "Football",
+        category: ["Sports"],
+        id: "219",
+    },
+    {
+        image: require("@/assets/images/elems/lambo.png"),
+        text: "Sports car",
+        category: ["Vehicles"],
+        id: "220",
+    },
+    {
+        image: require("@/assets/images/elems/magic-wand.png"),
+        text: "Magic wand",
+        category: ["Magic"],
+        id: "221",
+    },
+    {
+        image: require("@/assets/images/elems/pumpkin.png"),
+        text: "Pumpkin",
+        category: ["Magic", "Food"],
+        id: "222",
+    },
+    {
+        image: require("@/assets/images/elems/soccer.png"),
+        text: "Soccer ball",
+        category: ["Sports"],
+        id: "223",
+    },
+    {
+        image: require("@/assets/images/elems/sword.png"),
+        text: "Sword",
+        category: ["Toys"],
+        id: "224",
     },
 ]

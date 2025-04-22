@@ -72,5 +72,7 @@ const styles = StyleSheet.create({
         color: colors.primary,
         fontSize: 20,
         textAlign: "center",
+        maxWidth: 150,
+        flexWrap: "wrap",
     },
 })
