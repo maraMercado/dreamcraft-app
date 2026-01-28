@@ -1,50 +1,29 @@
-# Welcome to your Expo app 👋
+# 🚀 Dreamcraft App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Dreamcraft App** es una aplicación móvil multiplataforma creada con **React Native y Expo** que permite a usuarios (en particular audiencia infantil) diseñar escenas e historias personalizadas utilizando interfaces intuitivas de *drag and drop* y generación de contenido con inteligencia artificial.
 
-## Get started
+Integra autenticación de usuarios, almacenamiento persistente de contenido y consumo inteligente de APIs para generar historias únicas basadas en las elecciones del usuario.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 📱 Descripción del proyecto
 
-2. Start the app
+Los usuarios pueden:
 
-   ```bash
-    npx expo start
-   ```
+- **Crear imágenes de escenas** eligiendo personajes, fondos y elementos mediante una interfaz de *drag and drop*.  
+- **Personalizar historias** antes de generarlas, eligiendo género (terror, aventuras, romance, etc.), edad objetivo, longitud deseada, nombre del protagonista, etc.  
+- **Generar historias con IA** basadas en las preferencias seleccionadas y en la imagen creada gracias al consumo de una API externa.  
+- **Iniciar sesión mediante OAuth** para que cada usuario tenga su propio espacio y contenido.  
+- **Guardar historias** y acceder a ellas en futuras sesiones, posible mediante Firebase.
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🧠 Tecnologías utilizadas
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Se combinan las tecnologías:
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **React Native & Expo** como base de desarrollo multiplataforma (Android, iOS y web).
+- **Firebase Authentication** para manejo de inicio de sesión con OAuth. 
+- **Firebase Database (Firestore)** para almacenamiento y gestión de historias de usuario.
+- **Consumo de API externa (Groq)** para la generación de contenido narrativo con inteligencia artificial.
+- **Librerías y utilidades** para interfaces de usuario, manejo de estado y solicitudes HTTP.
